@@ -1,0 +1,13 @@
+/Api/node_modules
+/Api/public/hot
+/Api/public/storage
+/Api/storage/*.key
+/Api/vendor
+
+/Api/.env 
+/Api/.env.backup
+/Api/.phpunit.result.cache
+/Api/Homestead.json
+/Api/Homestead.yaml
+/Api/npm-debug.log
+/Api/yarn-error.log
