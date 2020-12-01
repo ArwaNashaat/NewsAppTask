@@ -8,23 +8,28 @@ const { Component } = require("react");
         this.state = {
             name: "Name",
             email: "Email",
-            dateOfBirth: "Date of Birth",
-            password:"password"
+            dateOfBirth: "Date of Birth"
         }
         this.handleChange = this.handleChange.bind(this);
         this.register = this.register.bind(this);
     }
     render(){
         return(
-        <div className="registerComponent">
-            User Name: <input type="text" name="name" value={this.state.name} onChange={this.handleChange}/>
-            <br></br>
-            User Email: <input type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
-            <br></br>
-            Date of Birth: <input type="text" name="dateOfBirth" value={this.state.dateOfBirth} onChange={this.handleChange}/>
-            <br></br>
-            <button onClick={this.register}>Register</button>
-        </div>
+            <form className="registerComponent">
+                
+                <label for="name">User name:</label><br></br>
+                <input type="text" name="name" value={this.state.name} onChange={this.handleChange}/><br></br><br></br>
+                
+                <label for="email">Email:</label><br></br>
+                <input type="text" name="email" value={this.state.email} onChange={this.handleChange}/><br></br><br></br>
+                
+                <label for="dateOfBirth">Date of Birth:</label><br></br>
+                <input type="text" name="dateOfBirth" value={this.state.dateOfBirth} onChange={this.handleChange}/><br></br><br></br>
+
+                <button onClick={this.register}>Register</button>
+                <a href='/Login'>login</a>
+            </form>
+            
         );
     }
     
@@ -43,9 +48,9 @@ const { Component } = require("react");
             headers: {'Content-Type': 'application/json', 'Accept':'application/json'}
         })
         .then(respone =>{
-            console.log(respone);
+            alert("Successfully Registered, please login");
         })
-        .catch(error => console.log(error))
+        .catch(error => alert("Please Check That You Entered Correct Email"))
     }
 
     verifyEmail(){
