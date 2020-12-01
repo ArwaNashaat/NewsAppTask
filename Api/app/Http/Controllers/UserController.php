@@ -15,15 +15,15 @@ class UserController extends Controller
 
         $userData = $this->validateRequest($request);
         $user = User::create($userData);
-        $this->sendEmail($user->password);
+        $this->sendEmail($user);
         return $user->password;
     }
 
-    private function sendEmail($password) {
+    private function sendEmail(User $user) {
         $data = array(
-            'password' => $password
+            'password' => $user->password
         );
-        Mail::to('arwanashaat@gmail.com')->send(new SendEmail($data));
+        Mail::to($user->email)->send(new SendEmail($data));
     }
 
     private function validateRequest(Request $request){
