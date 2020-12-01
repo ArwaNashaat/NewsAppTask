@@ -9,25 +9,32 @@ use Illuminate\Http\Request;
 class UserTest extends TestCase
 {
    
-    public function testRegisterTest()
+    public function testSuccessfulRegisterTest()
     {
-        $user = User::create(['name'=>'arwa',
-        'email'=>'arwa@gmail.com',
-        'dateOfBirth'=>'11/5/1198',
-        'password'=>'pass']);
+        $userData = [
+            "name" => "Arwa Nashaat",
+            "email" => "arwanashaat@gmail.com",
+            "dateOfBirth"=>"11/5/1198"
+        ];
+
+        $response = $this->json('POST', 'api/register', $userData, ['Accept' => 'application/json'])
+            ->assertStatus(201)->assertJsonFragment($userData);
         
-        // $request = new Request();
-        // $request->replace(['user'=>['name'=>'arwa',
-        // 'email'=>'arwa@gmail.com',
-        // 'dateOfBirth'=>'11/5/1198',
-        // 'password'=>'pass']]);
+        User::find($response['id'])->delete();    
+    }
 
-        // echo $request->user['name'];
-        $userController = new UserController();
-        // $userController->register($request);
 
-        $user2 = User::find($user);
-        $this->assertEquals($user->json_decode, $user2[0]->json_decode);
-      
+    public function testWrongEmailRegisterTest()
+    {
+        $userData = [
+            "name" => "Arwa Nashaat",
+            "email" => "arwanashaat.com",
+            "dateOfBirth"=>"11/5/1198"
+        ];
+
+        $this->json('POST', 'api/register', $userData, ['Accept' => 'application/json'])
+            ->assertStatus(422);
+        $this->assertDatabaseCount('users',0);
+        
     }
 }

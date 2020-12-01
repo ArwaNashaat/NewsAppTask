@@ -17,7 +17,7 @@ class UserController extends Controller
         $userData['password'] = $this->autoGeneratePassword();
         $user = User::create($userData);
         $this->sendEmail($user);
-        return $user->password;
+        return $user;
     }
 
     private function sendEmail(User $user) {
@@ -31,8 +31,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name'=>'required',
             'email'=>'email|required|unique:users',
-            'dateOfBirth' => 'required',
-            'password'=>'required',
+            'dateOfBirth' => 'required'
             ]);
         return $validatedData;
     }
