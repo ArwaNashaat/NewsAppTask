@@ -12,14 +12,20 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function register(Request $request){
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+    public function register(Request $request) {
+        
         $validatedData = $request->validate([
             'name'=>'required',
             'email'=>'email|required|unique:users',
-            'dateOfBirth'=>'required',
-            'password'=>'required|confirmed',
+            'dateOfBirth' => 'required',
+            'password'=>'required',
             ]);
-
-        User::create($validatedData);
+           
+        $user = User::create($validatedData);
+        return $user;
     }
 }
