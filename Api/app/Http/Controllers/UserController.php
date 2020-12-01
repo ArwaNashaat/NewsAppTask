@@ -14,6 +14,7 @@ class UserController extends Controller
     public function register(Request $request) {
 
         $userData = $this->validateRequest($request);
+        $userData['password'] = $this->autoGeneratePassword();
         $user = User::create($userData);
         $this->sendEmail($user);
         return $user->password;
@@ -32,8 +33,11 @@ class UserController extends Controller
             'email'=>'email|required|unique:users',
             'dateOfBirth' => 'required',
             'password'=>'required',
-            ]);   
-        $validatedData['password'] =   Hash::make(Str::random(16)); 
+            ]);
         return $validatedData;
+    }
+
+    private function autoGeneratePassword(){
+        return Hash::make(Str::random(16));
     }
 }
