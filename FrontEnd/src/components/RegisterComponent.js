@@ -42,7 +42,6 @@ const { Component } = require("react");
     register(e){
         this.verifyEmail();
         e.preventDefault();
-        console.log(this.state);
         
         axios.post('http://localhost:8001/api/register', this.state, {
             headers: {'Content-Type': 'application/json', 'Accept':'application/json'}
