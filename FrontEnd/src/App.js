@@ -2,7 +2,7 @@ import './App.css';
 import RegisterComponent from './components/RegisterComponent'
 import LoginComponent from './components/LoginComponent'
 import NewsComponent from './components/NewsComponent'
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 const { Component } = require("react");
 
 class App extends Component {
@@ -11,10 +11,12 @@ class App extends Component {
 
       <BrowserRouter>
         <div className="App">
-          <Route path='/' exact component={RegisterComponent} />
-          <Route path='/Login' exact component={LoginComponent} />
-          <Route path='/News' exact component={NewsComponent} />
-          <Route component={RegisterComponent}/>
+          <Switch>
+            <Route path='/' component={RegisterComponent} exact={true}/>
+            <Route path='/Login' component={LoginComponent} exact={true}/>
+            <Route path='/News' component={NewsComponent} exact={true}/>
+            <Route component={RegisterComponent}/>
+          </Switch>
         </div>
       </BrowserRouter>
 
