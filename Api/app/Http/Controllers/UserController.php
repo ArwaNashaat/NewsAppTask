@@ -8,35 +8,59 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\SendEmail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
+// use Illuminate\Support\Auth;
 
 class UserController extends Controller
 {
-    public function register(Request $request) {
+    public function login()
+    {
+        $credentials = request(['email', 'password']);
+
+        if (!Auth::attempt($credentials)) {
+            return response()->json(['error' => 'Wrong Email or Password'], 401);
+        }
+        return response(200);
+
+    }
+
+    public function register(Request $request)
+    {
 
         $userData = $this->validateRequest($request);
+
         $userData['password'] = $this->autoGeneratePassword();
+        $this->sendEmail($userData);
+
+        $userData['password'] = bcrypt($userData['password']);
+        
         $user = User::create($userData);
-        $this->sendEmail($user);
         return $user;
     }
 
-    private function sendEmail(User $user) {
+    private function sendEmail($user)
+    {
         $data = array(
-            'password' => $user->password
+            'password' => $user['password']
         );
-        Mail::to($user->email)->send(new SendEmail($data));
+        Mail::to($user['email'])->send(new SendEmail($data));
     }
 
-    private function validateRequest(Request $request){
+    private function validateRequest(Request $request)
+    {
         $validatedData = $request->validate([
-            'name'=>'required',
-            'email'=>'email|required|unique:users',
+            'name' => 'required',
+            'email' => 'email|required|unique:users',
             'dateOfBirth' => 'required'
-            ]);
+        ]);
+
+        
         return $validatedData;
     }
 
-    private function autoGeneratePassword(){
-        return Hash::make(Str::random(16));
+    private function autoGeneratePassword()
+    {
+        return Str::random(16);
     }
 }
