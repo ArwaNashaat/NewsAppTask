@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import AuthService from '../api/AuthService.js'
 const { Component } = require("react");
 
 class LoginComponent extends Component {
@@ -21,10 +20,10 @@ class LoginComponent extends Component {
         return (
             
             <form className="loginComponent">
-                <label for="email">Email:</label><br></br>
+                <label htmlFor="email">Email:</label><br></br>
                 <input type="text" name="email" value={this.state.email} onChange={this.handleChange} /><br></br><br></br>
 
-                <label for="password">Password:</label><br></br>
+                <label htmlFor="password">Password:</label><br></br>
                 <input type="password" name="password" value={this.state.password} onChange={this.handleChange} /><br></br><br></br>
 
                 <button onClick={this.login}>Login</button>
@@ -41,14 +40,15 @@ class LoginComponent extends Component {
     login(event){
 
         event.preventDefault();
-        
-        axios.post('http://localhost:8001/api/login', this.state, {
-            headers: {'Content-Type': 'application/json', 'Accept':'application/json'}
-        })
+        AuthService.login(this.state)
         .then(respone =>{ 
-            this.props.history.push("/News");
+            this.routeToNewsPage();
         })
         .catch(error => alert("Wrong Email or Password"))
+    }
+
+    routeToNewsPage(){
+        this.props.history.push("/News");
     }
 }
 

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import AuthService from '../api/AuthService.js'
 const { Component } = require("react");
 
 
@@ -17,13 +17,13 @@ const { Component } = require("react");
         return(
             <form className="registerComponent">
                 
-                <label for="name">User name:</label><br></br>
+                <label htmlFor="name">User name:</label><br></br>
                 <input type="text" name="name" value={this.state.name} onChange={this.handleChange}/><br></br><br></br>
                 
-                <label for="email">Email:</label><br></br>
+                <label htmlFor="email">Email:</label><br></br>
                 <input type="text" name="email" value={this.state.email} onChange={this.handleChange}/><br></br><br></br>
                 
-                <label for="dateOfBirth">Date of Birth:</label><br></br>
+                <label htmlFor="dateOfBirth">Date of Birth:</label><br></br>
                 <input type="text" name="dateOfBirth" value={this.state.dateOfBirth} onChange={this.handleChange}/><br></br><br></br>
 
                 <button onClick={this.register}>Register</button>
@@ -43,9 +43,7 @@ const { Component } = require("react");
         this.verifyEmail();
         event.preventDefault();
         
-        axios.post('http://localhost:8001/api/register', this.state, {
-            headers: {'Content-Type': 'application/json', 'Accept':'application/json'}
-        })
+        AuthService.register(this.state)
         .then(respone =>{
             alert("Successfully Registered, please login");
         })
@@ -55,12 +53,12 @@ const { Component } = require("react");
     verifyEmail(){
         if (this.state.email !== "undefined") {
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            
             if (!pattern.test(this.state.email)) {
               alert("Enter a valid email")
             }
           }
     }
-   
 }
 
 
