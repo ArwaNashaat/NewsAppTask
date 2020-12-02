@@ -36,7 +36,7 @@ class UserController extends Controller
         $userData['password'] = bcrypt($userData['password']);
         
         $user = User::create($userData);
-        return $user;
+        return response()->json(json_decode($user), 201);
     }
 
     private function sendEmail($user)
