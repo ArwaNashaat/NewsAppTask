@@ -32,15 +32,15 @@ class LoginComponent extends Component {
         );
     }
 
-    handleChange(event){
-        this.setState({
+    async handleChange(event){
+        await this.setState({
             [event.target.name]: event.target.value
         });
     }
 
-    login(e){
+    login(event){
 
-        e.preventDefault();
+        event.preventDefault();
         
         axios.post('http://localhost:8001/api/login', this.state, {
             headers: {'Content-Type': 'application/json', 'Accept':'application/json'}

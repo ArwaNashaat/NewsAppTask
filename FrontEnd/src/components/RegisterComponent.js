@@ -33,15 +33,15 @@ const { Component } = require("react");
         );
     }
     
-    handleChange(event){
-        this.setState({
+    async handleChange(event){
+        await this.setState({
             [event.target.name]: event.target.value
         });
     }
 
-    register(e){
+    register(event){
         this.verifyEmail();
-        e.preventDefault();
+        event.preventDefault();
         
         axios.post('http://localhost:8001/api/register', this.state, {
             headers: {'Content-Type': 'application/json', 'Accept':'application/json'}
