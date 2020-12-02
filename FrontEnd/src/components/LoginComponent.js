@@ -8,8 +8,7 @@ class LoginComponent extends Component {
         super(props)
         this.state = {
             email: "Email",
-            password: "****",
-            redirect: "/News",
+            password: "****"
 
         }
         this.handleChange = this.handleChange.bind(this);
