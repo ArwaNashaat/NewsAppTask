@@ -22,4 +22,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
-Route::get('/news/{country}', [NewsController::class, 'getNewsFrom']);
+Route::get('/news/{country}/{category}', [NewsController::class, 'getNewsFrom']);
