@@ -15,7 +15,7 @@ class NewsComponent extends Component {
     }
     
     componentDidMount(){
-        this.getNews();
+        // this.getNews();
     }
 
     render() {
@@ -41,7 +41,7 @@ class NewsComponent extends Component {
                     {this.state.news.map((news,index) =>
                     <tbody key={index}>    
                         <tr>
-                            <td><img src={news.urlToImage} width="200" height="100"></img></td>
+                            <td><img src={news.urlToImage} alt="" width="200" height="100"></img></td>
                             <td>{news.title}</td>
                             <td>{news.description}</td>
                             <td>{news.author}</td>
