@@ -38,8 +38,8 @@ class NewsComponent extends Component {
                         </tr>
                     </tbody>
 
-                    {this.state.news.map(news =>
-                    <tbody>    
+                    {this.state.news.map((news,index) =>
+                    <tbody key={index}>    
                         <tr>
                             <td><img src={news.urlToImage} width="200" height="100"></img></td>
                             <td>{news.title}</td>
