@@ -15,7 +15,7 @@ class NewsComponent extends Component {
     }
     
     componentDidMount(){
-        // this.getNews();
+        this.getNews();
     }
 
     render() {
@@ -23,18 +23,23 @@ class NewsComponent extends Component {
         
         return (
             <form className="newsComponent">
+                
                 <label>Choose Country</label><br></br>
+                
                 <select onChange={this.handleChange} >
                     <option value="eg">Egypt</option>
                     <option value="ae">UAE</option>
                 </select><br></br><br></br>
+                
                 <table border="1">
-                    <tr>
-                        {headerNames.map( value => <th>{value}</th>)}
-                    </tr>
+                    <tbody>
+                        <tr>
+                            {headerNames.map( (value,index) => <th key={index}>{value}</th>)}
+                        </tr>
+                    </tbody>
 
                     {this.state.news.map(news =>
-                        
+                    <tbody>    
                         <tr>
                             <td><img src={news.urlToImage} width="200" height="100"></img></td>
                             <td>{news.title}</td>
@@ -44,7 +49,8 @@ class NewsComponent extends Component {
                             <td><a href={news.url}>{news.source.name}</a></td>
                             
                         </tr>
-                    )}    
+                    </tbody>
+                    )}  
                 </table>
             </form>
         );
