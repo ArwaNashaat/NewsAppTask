@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Hash;
 use App\Mail\SendEmail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Support\Auth;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
     public function login()
     {

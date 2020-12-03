@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Models\User;
 use Illuminate\Http\Request;
 class UserTest extends TestCase
