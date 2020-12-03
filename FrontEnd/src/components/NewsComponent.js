@@ -15,11 +15,12 @@ class NewsComponent extends Component {
     }
     
     componentDidMount(){
-        this.getNews();
+        // this.getNews();
     }
 
     render() {
         const headerNames = ["","Title", "Content", "Author", "Date/Time", "Source"];
+        
         return (
             <form className="newsComponent">
                 <label>Choose Country</label><br></br>
@@ -31,7 +32,7 @@ class NewsComponent extends Component {
                     <tr>
                         {headerNames.map( value => <th>{value}</th>)}
                     </tr>
-                    
+
                     {this.state.news.map(news =>
                         
                         <tr>
@@ -39,7 +40,7 @@ class NewsComponent extends Component {
                             <td>{news.title}</td>
                             <td>{news.description}</td>
                             <td>{news.author}</td>
-                            <td>{news.publishedAt}</td>
+                            <td>{new Date(news.publishedAt).toLocaleString()}</td>
                             <td><a href={news.url}>{news.source.name}</a></td>
                             
                         </tr>
