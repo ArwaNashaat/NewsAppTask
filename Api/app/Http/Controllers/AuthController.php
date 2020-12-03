@@ -9,19 +9,22 @@ use App\Mail\SendEmail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
-// use Illuminate\Support\Auth;
-
 class AuthController extends Controller
 {
+    // public function __construct() {
+    //     $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    // }
+
     public function login()
     {
         $credentials = request(['email', 'password']);
-
-        if (!Auth::attempt($credentials)) {
+        
+        $token = Auth::attempt($credentials);
+        if (!$token) {
             return response()->json(['error' => 'Wrong Email or Password'], 401);
         }
-        return response(200);
 
+        return response()->json(['Token' => $token], 200);
     }
 
     public function register(Request $request)
