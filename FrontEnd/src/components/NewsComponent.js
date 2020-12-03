@@ -7,9 +7,22 @@ class NewsComponent extends Component {
         super(props)
         this.state = {
             country: "eg",
-            category: ["business", "sports"]
+            category: ["business", "sports"],
+            news:[]
         }
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidMount(){
+        this.url = 'http://localhost:8001/api/news/' + this.state.country;
+        NewsService.getNews(this.url, this.state.category)
+        .then(response => {
+            
+            this.setState({
+                news: this.getNewsArticles(response[0]).concat(this.getNewsArticles(response[1]))
+            })
+            console.log(this.state.news)
+        });  
     }
 
     render() {
@@ -24,14 +37,11 @@ class NewsComponent extends Component {
     async handleClick(event) {
 
         await this.setState({ country: event.target.value });
-        this.getNews(event);
 
     }
-
-    getNews(event) {
-        event.preventDefault();
-        this.url = 'http://localhost:8001/api/news/' + this.state.country;
-        NewsService.getNews(this.url, this.state.category);
+    
+    getNewsArticles(response){
+        return response.data.news.articles;
     }
 }
 
