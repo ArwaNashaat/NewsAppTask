@@ -15,6 +15,14 @@ class NewsService{
             headers: {'Content-Type': 'application/json', 'Accept':'application/json', 'Authorization':token}
         });
     }
+
+    removeFromFavorites(url){
+      let token = "Bearer " + localStorage.getItem('token');
+      
+      return axios.delete(url,{
+        headers: {'Content-Type': 'application/json', 'Accept':'application/json', 'Authorization':token}
+      });
+    }
 }
 
 export default new NewsService();

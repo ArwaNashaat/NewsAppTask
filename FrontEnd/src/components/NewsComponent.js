@@ -22,7 +22,6 @@ class NewsComponent extends Component {
 
     render() {
         const headerNames = ["","Title", "Content", "Author", "Date/Time", "Source", "Favorite"];
-        
         return (
             <form className="newsComponent">
                 
@@ -68,20 +67,33 @@ class NewsComponent extends Component {
     async handleClick(event) {
 
         await this.setState({ favorite: this.state.news[event.target.value] });
-        this.addToFavorite();
+        if(event.target.checked)
+            this.addToFavorite()
+        else
+            this.removeFromFavorite();
 
     }
     
     addToFavorite(){
         this.url = 'api/addToFavorites';
         
-        NewsService.addToFavorite(this.url, {"Fav":this.state.favorite})
+        NewsService.addToFavorite(this.url, this.state.favorite)
         .then(response => {
             console.log(response.data)
         })
         .catch(error => {console.log(error)})
     }
     
+    removeFromFavorite(){
+        this.url = 'api/removeFromFavorites/'+this.state.favorite.title+'/'+this.state.favorite.source;
+
+        NewsService.removeFromFavorites(this.url)
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(error => {console.log(error)})
+    }
+
     getNews(){
         this.url = 'api/news/' + this.state.country;
         NewsService.getNews(this.url, this.state.category)
