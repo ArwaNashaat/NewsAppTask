@@ -40,7 +40,8 @@ class LoginComponent extends Component {
 
         event.preventDefault();
         AuthService.login(this.state)
-            .then(respone => {
+            .then(response => {
+                localStorage.setItem('token', response.data.token)
                 this.routeToNewsPage();
             })
             .catch(error => alert("Wrong Email or Password"))
