@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FavoriteNewsController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,4 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
 Route::get('/news/{country}/{category}', [NewsController::class, 'getNewsFrom']);
+
+Route::post('/addToFavorites', [FavoriteNewsController::class, 'addFavoriteNews']);
+// Route::middleware('auth:api')->post('/addToFavorites', [FavoriteNewsController::class, 'addFavoriteNews']);
