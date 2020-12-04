@@ -17,18 +17,18 @@ class CreateFavoriteNewsTable extends Migration
             $table->id();
             $table->foreignId('userId');
             $table->String('source');
-            $table->String('author');
-            $table->String('title');
-            $table->String('description');
+            $table->String('author')->nullable();
+            $table->String('title')->nullable();
+            $table->String('description')->nullable();
             $table->String('url');
             $table->String('urlToImage');
             $table->String('publishedAt');
-            $table->String('content');    
+            $table->String('content')->nullable();    
             $table->timestamps();
 
             $table->foreign('userId')->references('id')->on('users');
-            $table->index(['userId', 'source', 'author', 'title', 'description',
-            'url', 'urlToImage', 'publishedAt', 'content']);
+            // $table->index(['userId', 'source', 'author', 'title', 'description',
+            // 'url', 'urlToImage', 'publishedAt', 'content']);
         });
     }
 
