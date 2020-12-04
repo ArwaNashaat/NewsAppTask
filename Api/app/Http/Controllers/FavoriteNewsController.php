@@ -17,9 +17,31 @@ class FavoriteNewsController extends Controller
         $userId = $user->id;
         
         $fav = FavoriteNews::firstOrCreate([
-            'favorite' => json_encode($request['Fav']),
+            'source' => json_encode($request['source']),
+            'author' => $request['author'],
+            'title' =>$request['title'],
+            'description' => $request['description'],
+            'url' => $request['url'],
+            'urlToImage' => $request['urlToImage'],
+            'publishedAt' => $request['publishedAt'],
+            'content' => $request['content'],
             'userId' => $userId
         ]);
         return response()->json(['Fav' => $fav], 200);
+    }
+
+    public function removeFavoriteNews($title, $source){
+        
+        if (! $user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['User Not Found'], 404);
+        }
+
+        $userId = $user->id;
+        $favId = FavoriteNews::where([
+            ['userId',$userId],
+            ['title', $title]],
+            ['source', $source])->delete();
+
+        return response()->json(["Remove from Favorites"], 200);
     }
 }
