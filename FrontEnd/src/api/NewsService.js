@@ -8,6 +8,13 @@ class NewsService{
             axios.get(`${url}/${category[1]}`)
           ]);
     }
+
+    addToFavorite(url, favorite){
+      let token = "Bearer " + localStorage.getItem('token');
+      return axios.post(url, favorite, {
+            headers: {'Content-Type': 'application/json', 'Accept':'application/json', 'Authorization':token}
+        });
+    }
 }
 
 export default new NewsService();
