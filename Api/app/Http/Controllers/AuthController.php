@@ -8,29 +8,26 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+// use Tymon\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
 {
-    // public function __construct() {
-    //     $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    // }
-
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
+        $credentials = $this->validateLogin($request);
         
-        $token = Auth::attempt($credentials);
+        $token = JWTAuth::attempt($credentials);
         if (!$token) {
             return response()->json(['error' => 'Wrong Email or Password'], 401);
         }
 
-        return response()->json(['Token' => $token], 200);
+        return response()->json(['token' => $token], 200);
     }
 
     public function register(Request $request)
     {
-
-        $userData = $this->validateRequest($request);
+        $userData = $this->validateRegister($request);
 
         $userData['password'] = $this->autoGeneratePassword();
         $this->sendEmail($userData);
@@ -43,13 +40,24 @@ class AuthController extends Controller
 
     private function sendEmail($user)
     {
-        $data = array(
+        $password = array(
             'password' => $user['password']
         );
-        Mail::to($user['email'])->send(new SendEmail($data));
+        Mail::to($user['email'])->send(new SendEmail($password));
     }
 
-    private function validateRequest(Request $request)
+    private function validateLogin(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'email|required',
+            'password' => 'required'
+        ]);
+
+        
+        return $validatedData;
+    }
+
+    private function validateRegister(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required',
