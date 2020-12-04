@@ -8,18 +8,20 @@ class NewsComponent extends Component {
         this.state = {
             country: "eg",
             category: ["business", "sports"],
-            news:[]
+            news:[],
+            favorite: null,
         }
         this.handleChange = this.handleChange.bind(this);
-        
+        this.handleClick = this.handleClick.bind(this);
     }
     
     componentDidMount(){
+        
         this.getNews();
     }
 
     render() {
-        const headerNames = ["","Title", "Content", "Author", "Date/Time", "Source"];
+        const headerNames = ["","Title", "Content", "Author", "Date/Time", "Source", "Favorite"];
         
         return (
             <form className="newsComponent">
@@ -41,13 +43,13 @@ class NewsComponent extends Component {
                     {this.state.news.map((news,index) =>
                     <tbody key={index}>    
                         <tr>
-                            <td><img src={news.urlToImage} alt="" width="200" height="100"></img></td>
+                            <td><img src={news.urlToImage} alt="" width="100" height="50"></img></td>
                             <td>{news.title}</td>
                             <td>{news.description}</td>
                             <td>{news.author}</td>
                             <td>{new Date(news.publishedAt).toLocaleString()}</td>
                             <td><a href={news.url}>{news.source.name}</a></td>
-                            
+                            <td><input type="checkbox" value={index} onClick={this.handleClick}/></td>
                         </tr>
                     </tbody>
                     )}  
@@ -63,8 +65,25 @@ class NewsComponent extends Component {
 
     }
     
+    async handleClick(event) {
+
+        await this.setState({ favorite: this.state.news[event.target.value] });
+        this.addToFavorite();
+
+    }
+    
+    addToFavorite(){
+        this.url = 'api/addToFavorites';
+        
+        NewsService.addToFavorite(this.url, {"Fav":this.state.favorite})
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(error => {console.log(error)})
+    }
+    
     getNews(){
-        this.url = 'http://localhost:8001/api/news/' + this.state.country;
+        this.url = 'api/news/' + this.state.country;
         NewsService.getNews(this.url, this.state.category)
         .then(response => {
             
