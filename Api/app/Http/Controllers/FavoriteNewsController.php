@@ -11,7 +11,7 @@ class FavoriteNewsController extends Controller
     public function addFavoriteNews(Request $request){
         
         if (! $user = JWTAuth::parseToken()->authenticate()) {
-            return response()->json(['User Found'], 404);
+            return response()->json(['User Not Found'], 404);
         }
 
         $userId = $user->id;
