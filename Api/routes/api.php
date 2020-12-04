@@ -26,5 +26,5 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::get('/news/{country}/{category}', [NewsController::class, 'getNewsFrom']);
 
-Route::post('/addToFavorites', [FavoriteNewsController::class, 'addFavoriteNews']);
-// Route::middleware('auth:api')->post('/addToFavorites', [FavoriteNewsController::class, 'addFavoriteNews']);
+Route::middleware('auth:api')->post('/addToFavorites', [FavoriteNewsController::class, 'addFavoriteNews']);
+Route::middleware('auth:api')->delete('/removeFromFavorites/{title}/{source}', [FavoriteNewsController::class, 'removeFavoriteNews']);
