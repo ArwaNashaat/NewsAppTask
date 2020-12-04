@@ -17,10 +17,15 @@ class FavoriteNews extends Model implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        
         'userId',
-        //Store the whole news json
-        'favorite',
+        'source',
+        'author',
+        'title',
+        'description',
+        'url',
+        'urlToImage',
+        'publishedAt',
+        'content',
     ];
 
 

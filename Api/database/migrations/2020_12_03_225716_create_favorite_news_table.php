@@ -14,10 +14,16 @@ class CreateFavoriteNewsTable extends Migration
     public function up()
     {
         Schema::create('favorite_news', function (Blueprint $table) {
-            
             $table->id();
             $table->foreignId('userId');
-            $table->json('favorite');
+            $table->json('source');
+            $table->String('author')->nullable();
+            $table->String('title');
+            $table->String('description')->nullable();
+            $table->String('url');
+            $table->String('urlToImage');
+            $table->String('publishedAt');
+            $table->String('content')->nullable();    
             $table->timestamps();
 
             $table->foreign('userId')->references('id')->on('users');
