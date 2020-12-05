@@ -1,0 +1,47 @@
+type Query {
+    user(id: ID! @eq): User @find
+    users: [User!]! @all
+    favorite(id: ID! @eq): FavoriteNews @find
+    favorites: [FavoriteNews!]! @all
+    # users: [User!]! @all
+}
+
+# type Query {
+#     user(id: ID! @eq): User @find
+#     users: [User!]! @paginate
+# }
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    dateOfBirth: String!
+    favoriteNews: [FavoriteNews!]! @hasMany
+}
+
+
+type FavoriteNews {
+    id: ID!
+    source: String!
+    author: String!
+    title: String
+    description: String!
+    url: String!
+    urlToImage: String!
+    publishedAt: String!
+    content: String!
+    
+}
+
+type Mutation {
+    createUser(
+        name: String!
+        email: String! @rules(apply: ["email", "unique:users"])
+        dateOfBirth: String!
+        password: String! @bcrypt
+    ): User @create
+
+    login(
+        email: String! 
+        password: String!
+    ): String @field(resolver: "AuthMutator@login")
+}
