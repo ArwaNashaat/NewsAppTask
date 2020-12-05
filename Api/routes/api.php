@@ -28,3 +28,4 @@ Route::get('/news/{country}/{category}', [NewsController::class, 'getNewsFrom'])
 
 Route::middleware('auth:api')->post('/addToFavorites', [FavoriteNewsController::class, 'addFavoriteNews']);
 Route::middleware('auth:api')->delete('/removeFromFavorites/{title}/{source}', [FavoriteNewsController::class, 'removeFavoriteNews']);
+Route::middleware('auth:api')->get('/getAllFavorites', [FavoriteNewsController::class, 'getAllFavorites']);
