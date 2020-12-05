@@ -33,15 +33,15 @@ type FavoriteNews {
 }
 
 type Mutation {
-    createUser(
-        name: String!
+    register(
+        name: String! @rules(apply: ["required"])
         email: String! @rules(apply: ["email", "unique:users"])
-        dateOfBirth: String!
-        password: String! @bcrypt
-    ): User @create
+        dateOfBirth: String! @rules(apply: ["required"])
+        # password: String! @bcrypt @rules(apply: ["required"])
+    ): User @field(resolver:"AuthMutator@register")
 
     login(
-        email: String! 
-        password: String!
+        email: String! @rules(apply: ["email", "required"])
+        password: String! @rules(apply: ["required"])
     ): String @field(resolver: "AuthMutator@login")
 }
