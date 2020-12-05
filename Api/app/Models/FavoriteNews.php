@@ -10,14 +10,14 @@ use Illuminate\Notifications\Notifiable;
 class FavoriteNews extends Model implements JWTSubject
 {
     use HasFactory, Notifiable;
-     
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'userId',
+        'user_id',
         'source',
         'author',
         'title',

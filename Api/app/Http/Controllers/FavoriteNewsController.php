@@ -25,7 +25,7 @@ class FavoriteNewsController extends Controller
             'urlToImage' => $request['urlToImage'],
             'publishedAt' => $request['publishedAt'],
             'content' => $request['content'],
-            'userId' => $userId
+            'user_id' => $userId
         ]);
         return response()->json(['favorite' => $favorite], 200);
     }
@@ -38,7 +38,7 @@ class FavoriteNewsController extends Controller
 
         $userId = $user->id;
         FavoriteNews::where([
-            ['userId',$userId],
+            ['user_id',$userId],
             ['title', $title],
             ['source', $source]])->delete();
 
@@ -52,7 +52,7 @@ class FavoriteNewsController extends Controller
 
         $userId = $user->id;
         
-        $favorites = FavoriteNews::where('userId', $userId)->get();
+        $favorites = FavoriteNews::where('user_id', $userId)->get();
         return response()->json(['favorites' => $favorites], 200);
     }
 }

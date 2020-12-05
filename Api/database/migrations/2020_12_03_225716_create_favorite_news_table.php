@@ -15,7 +15,7 @@ class CreateFavoriteNewsTable extends Migration
     {
         Schema::create('favorite_news', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('userId');
+            $table->foreignId('user_id');
             $table->json('source');
             $table->String('author')->nullable();
             $table->String('title');
@@ -26,7 +26,7 @@ class CreateFavoriteNewsTable extends Migration
             $table->String('content')->nullable();    
             $table->timestamps();
 
-            $table->foreign('userId')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
