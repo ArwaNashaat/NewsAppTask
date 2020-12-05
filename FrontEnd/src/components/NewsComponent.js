@@ -13,24 +13,26 @@ class NewsComponent extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.routeToFavorites = this.routeToFavorites.bind(this);
     }
     
-    componentDidMount(){
-        
+    componentDidMount(){    
         this.getNews();
     }
 
     render() {
-        const headerNames = ["","Title", "Content", "Author", "Date/Time", "Source", "Favorite"];
+        const headerNames = ["","Title", "Content", "Author", "Date/Time", "Source", "Add to Favorites"];
         return (
             <form className="newsComponent">
                 
-                <label>Choose Country</label><br></br>
+                <input type="button" value="Show Favorites" style={{float: 'right'}}
+                onClick={this.routeToFavorites}/>
                 
+                <label>Choose Country</label><br/>
                 <select onChange={this.handleChange} >
                     <option value="eg">Egypt</option>
                     <option value="ae">UAE</option>
-                </select><br></br><br></br>
+                </select><br/><br/>
                 
                 <table border="1">
                     <tbody>
@@ -67,27 +69,13 @@ class NewsComponent extends Component {
     async handleClick(event) {
 
         await this.setState({ favorite: this.state.news[event.target.value] });
-        if(event.target.checked)
-            this.addToFavorite()
-        else
-            this.removeFromFavorite();
-
+        this.addToFavorite();
     }
     
     addToFavorite(){
         this.url = 'api/addToFavorites';
         
         NewsService.addToFavorite(this.url, this.state.favorite)
-        .then(response => {
-            console.log(response.data)
-        })
-        .catch(error => {console.log(error)})
-    }
-    
-    removeFromFavorite(){
-        this.url = 'api/removeFromFavorites/'+this.state.favorite.title+'/'+this.state.favorite.source;
-
-        NewsService.removeFromFavorites(this.url)
         .then(response => {
             console.log(response.data)
         })
@@ -109,6 +97,11 @@ class NewsComponent extends Component {
     getNewsArticles(response){
         return response.data.news.articles;
     }
+
+    routeToFavorites(event){
+        this.props.history.push("/Favorites");
+    }
+
 }
 
 export default NewsComponent;
