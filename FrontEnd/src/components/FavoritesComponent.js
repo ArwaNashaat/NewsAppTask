@@ -19,7 +19,7 @@ class FavoritesComponent extends Component {
     }
 
     render() {
-        const headerNames = ["","Title", "Content", "Author", "Date/Time", "Source", "Remove from Favorite"];
+        const headerNames = ["","Title", "Content", "Author", "Date/Time", "Source", "Remove from Favorites"];
         return (
             <form className="favoritesComponent">
                                 
@@ -28,6 +28,7 @@ class FavoritesComponent extends Component {
                         <tr>
                             {headerNames.map( (value,index) => <th key={index}>{value}</th>)}
                         </tr>
+    
                     </tbody>
 
                     {this.state.favorites.map((news,index) =>
@@ -39,7 +40,9 @@ class FavoritesComponent extends Component {
                             <td>{news.author}</td>
                             <td>{new Date(news.publishedAt).toLocaleString()}</td>
                             <td><a href={news.url}>{JSON.parse(news.source).name}</a></td>
-                            <td><input type="checkbox" value={index} onClick={this.handleClick}/></td>
+                            {/* FavoritesComponent button is different from the one in NewsComponent 
+                            so the page automatically refreshes after the remove button is clicked, but not refreshes after the add button is clicked*/}
+                            <td><button id={index} onClick={this.handleClick}>Remove</button></td>
                         </tr>
                     </tbody>
                     )}  
@@ -50,8 +53,8 @@ class FavoritesComponent extends Component {
     
     async handleClick(event){
         
-        await this.setState({ title: this.state.favorites[event.target.value].title,
-                            source: this.state.favorites[event.target.value].source});
+        await this.setState({ title: this.state.favorites[event.target.id].title,
+                            source: this.state.favorites[event.target.id].source});
         this.removeFromFavorite();
     }
     
