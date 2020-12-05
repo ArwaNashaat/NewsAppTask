@@ -50,7 +50,7 @@ class NewsComponent extends Component {
                             <td>{news.author}</td>
                             <td>{new Date(news.publishedAt).toLocaleString()}</td>
                             <td><a href={news.url}>{news.source.name}</a></td>
-                            <td><input type="checkbox" value={index} onClick={this.handleClick}/></td>
+                            <td><input type="button" id={index} value="Add"onClick={this.handleClick}/></td>
                         </tr>
                     </tbody>
                     )}  
@@ -68,7 +68,7 @@ class NewsComponent extends Component {
     
     async handleClick(event) {
 
-        await this.setState({ favorite: this.state.news[event.target.value] });
+        await this.setState({ favorite: this.state.news[event.target.id] });
         this.addToFavorite();
     }
     
