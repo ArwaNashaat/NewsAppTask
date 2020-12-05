@@ -1,7 +1,8 @@
 import axios from 'axios';
+import Helper from '../Helper.js';
 
 class NewsService{
-
+  
   getNews(url, category){
         return axios.all([
             axios.get(`${url}/${category[0]}`),
@@ -10,18 +11,25 @@ class NewsService{
     }
 
     addToFavorite(url, favorite){
-      let token = "Bearer " + localStorage.getItem('token');
+      
       return axios.post(url, favorite, {
-            headers: {'Content-Type': 'application/json', 'Accept':'application/json', 'Authorization':token}
+            headers: Helper.getHeader(),
         });
     }
 
     removeFromFavorites(url){
-      let token = "Bearer " + localStorage.getItem('token');
-      
+  
       return axios.delete(url,{
-        headers: {'Content-Type': 'application/json', 'Accept':'application/json', 'Authorization':token}
+        headers: Helper.getHeader()
       });
+    }
+
+    async getAllFavorites(url){
+
+      return axios.get(url,{
+        headers: Helper.getHeader()
+      })
+
     }
 }
 
