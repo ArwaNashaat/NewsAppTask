@@ -10,13 +10,15 @@ class NewsComponent extends Component {
             category: ["business", "sports"],
             news:[],
             favorite: null,
+            loading: null
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.routeToFavorites = this.routeToFavorites.bind(this);
+        this.getNews = this.getNews.bind(this);
     }
     
-    componentDidMount(){    
+    async componentDidMount(){   
         this.getNews();
     }
 
@@ -28,6 +30,8 @@ class NewsComponent extends Component {
                 <input type="button" value="Show Favorites" style={{float: 'right'}}
                 onClick={this.routeToFavorites}/>
                 
+                <label style={{float: 'left'}} className="stateLable">{this.state.loading}</label>  
+
                 <label>Choose Country</label><br/>
                 <select onChange={this.handleChange} >
                     <option value="eg">Egypt</option>
@@ -82,7 +86,10 @@ class NewsComponent extends Component {
         .catch(error => {console.log(error)})
     }
 
-    getNews(){
+    async getNews(event){
+
+        await this.setState({loading: "Loading..."})  
+
         this.url = 'api/news/' + this.state.country;
         NewsService.getNews(this.url, this.state.category)
         .then(response => {
@@ -90,8 +97,13 @@ class NewsComponent extends Component {
             this.setState({
                 news: this.getNewsArticles(response[0]).concat(this.getNewsArticles(response[1]))
             })
-            console.log(this.state.news)
+
         })
+        this.stopLoggingLable();
+    }
+
+    async stopLoggingLable(){
+        await this.setState({loading: null})
     }
 
     getNewsArticles(response){
