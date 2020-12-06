@@ -16,3 +16,6 @@
 1) RUN `cd FrontEnd`
 2) RUN `npm install`
 3) RUN `npm start`
+
+### Cors Error
+- Cors error may occur. if so, download and enable this extension: https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en
