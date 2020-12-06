@@ -62,9 +62,6 @@ class FavoritesComponent extends Component {
         this.url = 'api/removeFromFavorites/'+this.state.title+'/'+this.state.source;
 
         NewsService.removeFromFavorites(this.url)
-        .then(response => {
-            console.log(response.data)
-        })
         .catch(error => {console.log(error)})
     }
 
@@ -75,7 +72,7 @@ class FavoritesComponent extends Component {
             this.setState({favorites: response.data.favorites});
         })
         .catch(error => {
-            console.log(error)
+            alert("Please Login First")
         })
     }
 
