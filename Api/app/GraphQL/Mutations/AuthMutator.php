@@ -7,7 +7,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
-
+use GraphQL\Error\Error;
 class AuthMutator
 {
 
@@ -20,7 +20,7 @@ class AuthMutator
 
         $token = JWTAuth::attempt($credentials);
         if (!$token) {
-            return response()->json(['error' => 'Wrong Email or Password'], 401);
+            return new Error("401");
         }
 
         return $token;

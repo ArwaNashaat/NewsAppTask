@@ -37,11 +37,10 @@ type Mutation {
         name: String! @rules(apply: ["required"])
         email: String! @rules(apply: ["email", "unique:users"])
         dateOfBirth: String! @rules(apply: ["required"])
-        # password: String! @bcrypt @rules(apply: ["required"])
     ): User @field(resolver:"AuthMutator@register")
 
     login(
-        email: String! @rules(apply: ["email", "required"])
-        password: String! @rules(apply: ["required"])
+        email: String!
+        password: String!
     ): String @field(resolver: "AuthMutator@login")
 }
