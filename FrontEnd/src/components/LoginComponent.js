@@ -44,14 +44,15 @@ class LoginComponent extends Component {
 
         event.preventDefault();
         await this.setState({isLogged: "Logging..."})
+
         let response = await AuthService.login(this.state)
-        // console.log(response)
-        if(this.checkError(response)){
+        if(this.isError(response)){
             this.stopLogginLable()
             return
         }
+
         this.stopLogginLable();
-        console.log(response.data.data.login)
+
         localStorage.setItem('token', response.data.data.login)
         this.routeToNewsPage();
     }
@@ -60,7 +61,7 @@ class LoginComponent extends Component {
         await this.setState({isLogged: null})
     }
 
-    checkError(response){
+    isError(response){
         if(response.data.errors){
             alert("Wrong Email or Password")
             return true;
