@@ -8,7 +8,8 @@ class LoginComponent extends Component {
         super(props)
         this.state = {
             email: "Email",
-            password: "****"
+            password: "****",
+            isLogged:null
 
         }
         this.handleChange = this.handleChange.bind(this);
@@ -19,6 +20,9 @@ class LoginComponent extends Component {
         return (
             
             <form className="loginComponent">
+
+                <label className="stateLable">{this.state.isLogged}</label> <br/><br/><br/><br/>
+
                 <label htmlFor="email">Email:</label><br></br>
                 <input type="text" name="email" value={this.state.email} onChange={this.handleChange} /><br></br><br></br>
 
@@ -39,14 +43,22 @@ class LoginComponent extends Component {
     async login(event) {
 
         event.preventDefault();
+        await this.setState({isLogged: "Logging..."})
         let response = await AuthService.login(this.state)
-        console.log(response)
-        if(this.checkError(response))
+        // console.log(response)
+        if(this.checkError(response)){
+            this.stopLogginLable()
             return
-                
+        }
+        this.stopLogginLable();
         localStorage.setItem('token', response.data.token)
         this.routeToNewsPage();
     }
+
+    async stopLogginLable(){
+        await this.setState({isLogged: null})
+    }
+
     checkError(response){
         if(response.data.errors){
             alert("Wrong Email or Password")

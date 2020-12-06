@@ -9,7 +9,8 @@ class RegisterComponent extends Component{
         this.state = {
             name: "Name",
             email: "Email",
-            dateOfBirth: "Date of Birth"
+            dateOfBirth: "Date of Birth",
+            isRegistered: null
         }
         this.handleChange = this.handleChange.bind(this);
         this.register = this.register.bind(this);
@@ -19,6 +20,7 @@ class RegisterComponent extends Component{
         return(
             <form className="registerComponent">
                 
+                <label className="stateLable">{this.state.isRegistered}</label> <br/><br/><br/><br/>
                 <label htmlFor="name">User name:</label><br></br>
                 <input type="text" name="name" value={this.state.name} onChange={this.handleChange}/><br></br><br></br>
                 
@@ -43,18 +45,26 @@ class RegisterComponent extends Component{
 
     async register(event){
         event.preventDefault();
+        await this.setState({isRegistered: "Registering..."})
         if(this.validateInputFields()){
+            this.stopRegisteringLable()
             return
         }
         
         let response = await AuthService.register(this.state)
-        console.log(response.data)
+        // console.log(response.data)
+        
         //register json doesn't contain user
         if (response.data.data.register == null)
             alert("Email Already Exists")
         else
             alert("Successfully Registered, please login")
+        this.stopRegisteringLable()
         
+    }
+
+    async stopRegisteringLable(){
+        await this.setState({isRegistered: null})
     }
 
     validateInputFields(){

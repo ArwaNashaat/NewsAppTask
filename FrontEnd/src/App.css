@@ -44,3 +44,7 @@ table {
 td {
   word-wrap:break-word;
 }
+
+.stateLable {
+  color: red !important;
+}
