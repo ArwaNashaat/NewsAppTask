@@ -1,3 +1,4 @@
+export const url = 'http://localhost:8001/graphql'; 
 class Helper{
     getToken(){
         return "Bearer " + localStorage.getItem('token');
