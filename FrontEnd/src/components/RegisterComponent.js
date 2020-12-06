@@ -1,4 +1,5 @@
 import AuthService from '../api/AuthService.js'
+
 const { Component } = require("react");
 
 
@@ -40,19 +41,23 @@ class RegisterComponent extends Component{
     }
 
     register(event){
+
+        this.validateInputFields();
+        event.preventDefault();
+        AuthService.register(this.state)
+    }
+
+    validateInputFields(){
         if(!this.verifyEmail()){
             alert("Wrong Email");
             return;
         }
-        event.preventDefault();
-        
-        AuthService.register(this.state)
-        .then(respone =>{
-            alert("Successfully Registered, please login");
-        })
-        .catch(error => alert("Please Enter Your Data Correctly"))
+        if(!this.name || !this.dateOfBirth)
+        {
+            alert("Please Fill Your Information")
+            return;
+        }
     }
-
     verifyEmail(){
         if (this.state.email !== "undefined") {
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
