@@ -19,3 +19,16 @@
 
 ### Cors Error
 - Cors error may occur. if so, download and enable this extension: https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en
+
+### What is implemented
+1) Register/Login user (Frontend & Backend) in graphql api
+2) Register/Login user (Backend only) in RESTFUL api
+3) Send email to user with password
+4) JWT tokens (validation & generation)
+5) Get both sports/business headlines form Dubai or Egypt using NewsApi and show them to user (Frontend & Backend)
+6) Add/Remove favorites (Frontend & Backend) in RESTFUl api only
+
+### What has NOT been implemented
+1) Add/Remove favorites in graphql
+2) Unit tests
+
