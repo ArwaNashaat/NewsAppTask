@@ -36,17 +36,24 @@ class LoginComponent extends Component {
         });
     }
 
-    login(event) {
+    async login(event) {
 
         event.preventDefault();
-        AuthService.login(this.state)
-            .then(response => {
-                localStorage.setItem('token', response.data.token)
-                this.routeToNewsPage();
-            })
-            .catch(error => alert("Wrong Email or Password"))
+        let response = await AuthService.login(this.state)
+        console.log(response)
+        if(this.checkError(response))
+            return
+                
+        localStorage.setItem('token', response.data.token)
+        this.routeToNewsPage();
     }
-
+    checkError(response){
+        if(response.data.errors){
+            alert("Wrong Email or Password")
+            return true;
+        }
+        return false;
+    }
     routeToNewsPage() {
         this.props.history.push("/News");
     }
