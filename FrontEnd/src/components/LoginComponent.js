@@ -51,7 +51,8 @@ class LoginComponent extends Component {
             return
         }
         this.stopLogginLable();
-        localStorage.setItem('token', response.data.token)
+        console.log(response.data.data.login)
+        localStorage.setItem('token', response.data.data.login)
         this.routeToNewsPage();
     }
 
