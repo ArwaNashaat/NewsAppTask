@@ -13,6 +13,7 @@ class RegisterComponent extends Component{
         }
         this.handleChange = this.handleChange.bind(this);
         this.register = this.register.bind(this);
+        this.validateInputFields = this.validateInputFields.bind(this)
     }
     render(){
         return(
@@ -40,23 +41,33 @@ class RegisterComponent extends Component{
         });
     }
 
-    register(event){
-
-        this.validateInputFields();
+    async register(event){
         event.preventDefault();
-        AuthService.register(this.state)
+        if(this.validateInputFields()){
+            return
+        }
+        
+        let response = await AuthService.register(this.state)
+        console.log(response.data)
+        //register json doesn't contain user
+        if (response.data.data.register == null)
+            alert("Email Already Exists")
+        else
+            alert("Successfully Registered, please login")
+        
     }
 
     validateInputFields(){
         if(!this.verifyEmail()){
             alert("Wrong Email");
-            return;
+            return true;
         }
-        if(!this.name || !this.dateOfBirth)
+        if(!this.state.name || !this.state.dateOfBirth)
         {
             alert("Please Fill Your Information")
-            return;
+            return true;
         }
+        return false;
     }
     verifyEmail(){
         if (this.state.email !== "undefined") {
